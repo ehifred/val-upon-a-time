@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For You ❤️</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffdde1;
+  text-align: center;
+  overflow: hidden;
+}
+
+.screen {
+  margin-top: 120px;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 18px;
+  margin: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.yes { background: #ff4d6d; color: white; }
+.no { background: #444; color: white; }
+
+.heart {
+  position: fixed;
+  top: -10px;
+  font-size: 24px;
+  animation: fall linear forwards;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(100vh);
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="screen" id="screen1">
+  <h2>Hey BEAUTIFUL ❤️</h2>
+  <p>I made something small for you...</p>
+  <button onclick="next(2)">Open it</button>
+</div>
+
+<div class="screen" id="screen2" style="display:none;">
+  <h2>I have an important question 🥺</h2>
+  <button onclick="next(3)">Okay... ask</button>
+</div>
+
+<div class="screen" id="screen3" style="display:none;">
+  <h1>Will you be my Valentine? ❤️</h1>
+  <button class="yes" onclick="yes()">Yes 💖</button>
+  <button class="no" onmouseover="moveNo(this)">No 🙃</button>
+</div>
+
+<script>
+function next(screen) {
+  document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
+  document.getElementById('screen' + screen).style.display = 'block';
+}
+
+function moveNo(btn) {
+  btn.style.position = "absolute";
+  btn.style.left = Math.random() * window.innerWidth + "px";
+  btn.style.top = Math.random() * window.innerHeight + "px";
+}
+
+function yes() {
+  document.body.innerHTML = `
+    <div style="margin-top:120px;">
+      <h1>I knew it 😎❤️</h1>
+      <p>I promise to keep choosing you,<br>
+      even on days you steal my food 😌</p>
+      <h2>I love you 💖</h2>
+    </div>
+  `;
+
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * window.innerWidth + "px";
+    heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 5000);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
