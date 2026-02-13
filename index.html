@@ -104,7 +104,7 @@
   <div class="typewriter">
     <h1>Hey <span id="her-name">Bunnie</span> ❤️</h1>
   </div>
-  <p>I made something magical just for you...</p>
+  <p>I made something special just for you...</p>
   <button onclick="next(2)">Open it</button>
 </div>
 
@@ -112,19 +112,19 @@
   <div class="typewriter">
     <h1>I've got an important question 🥺</h1>
   </div>
-  <button onclick="next(3)">Okay... ask</button>
+  <button onclick="next(3)">Oya... ask</button>
 </div>
 
 <div class="screen" id="screen3">
   <h1>Will you be my Valentine? ❤️</h1>
   <button class="yes" onclick="yes()">Yes 💖</button>
-  <button class="no" id="no-btn">No 🙃</button>
+  <button class="no" id="no-btn">No keh 🙃</button>
   <div id="no-msg"></div>
 </div>
 
 <script>
 const herName = "Bunnie";
-const insideJoke = "even when you steal my food 😌❤️";
+const insideJoke = "even though you're a dodo 😌❤️";
 
 function next(screen) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
@@ -136,10 +136,10 @@ const noBtn = document.getElementById("no-btn");
 const noMsg = document.getElementById("no-msg");
 let noClickCount = 0;
 const messages = [
-  "Pretty please? 😇",
-  "Are you sure? 😜",
-  "Really really sure? 😏",
-  "Sorry, no more options… say Yes or else 😎"
+  "Shey nah mistake you press no? 😇",
+  "Abeg nah? say yes 😜",
+  "If you press No again ehn 😏",
+  "Oga, no more options… Na Yes or Yes 😎"
 ];
 
 noBtn.addEventListener("click", () => {
@@ -171,7 +171,7 @@ setInterval(() => {
 function yes() {
   document.body.innerHTML = `
     <div style="margin-top:120px;">
-      <h1>Yay! I knew it 😎❤️</h1>
+      <h1>Ehen! I talk ahm 😎❤️</h1>
       <p>I promise to keep choosing you,<br>${insideJoke}</p>
       <h2>I love you 💖</h2>
     </div>
