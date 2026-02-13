@@ -2,89 +2,144 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>For You ❤️</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Valentine Surprise 💖</title>
 
 <style>
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #ffdde1;
-  text-align: center;
-  overflow: hidden;
-}
-
-.screen {
-  margin-top: 120px;
-}
-
-button {
-  padding: 12px 25px;
-  font-size: 18px;
-  margin: 10px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-.yes { background: #ff4d6d; color: white; }
-.no { background: #444; color: white; }
-
-.heart {
-  position: fixed;
-  top: -10px;
-  font-size: 24px;
-  animation: fall linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(100vh);
+  /* Background */
+  body {
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+    overflow: hidden;
+    color: #fff;
+    text-align: center;
   }
-}
+
+  /* Typewriter effect */
+  .typewriter h1 {
+    overflow: hidden;
+    border-right: .15em solid #fff;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .1em;
+    animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
+  }
+  @keyframes typing {
+    from { width: 0 }
+    to { width: 100% }
+  }
+  @keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: white; }
+  }
+
+  .screen { display: none; }
+  button {
+    padding: 12px 25px;
+    font-size: 18px;
+    margin: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .yes {
+    background: #ff4d6d;
+    color: white;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+
+  .no {
+    background: #444;
+    color: white;
+    position: relative;
+  }
+
+  .heart {
+    position: fixed;
+    font-size: 24px;
+    top: -10px;
+    animation: fall linear forwards;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(100vh); opacity: 0; }
+  }
+
+  /* Confetti container */
+  .confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    background: pink;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0.8;
+    transform: rotate(45deg);
+  }
 </style>
 </head>
 
 <body>
 
-<div class="screen" id="screen1">
-  <h2>Hey BEAUTIFUL ❤️</h2>
-  <p>I made something small for you...</p>
+<!-- Screen 1 -->
+<div class="screen" id="screen1" style="display:block;">
+  <div class="typewriter">
+    <h1>Hey <span id="her-name">Bunnie</span> ❤️</h1>
+  </div>
+  <p>I made something magical just for you...</p>
   <button onclick="next(2)">Open it</button>
 </div>
 
-<div class="screen" id="screen2" style="display:none;">
-  <h2>I have an important question 🥺</h2>
+<!-- Screen 2 -->
+<div class="screen" id="screen2">
+  <div class="typewriter">
+    <h1>I've got an important question 🥺</h1>
+  </div>
   <button onclick="next(3)">Okay... ask</button>
 </div>
 
-<div class="screen" id="screen3" style="display:none;">
+<!-- Screen 3 -->
+<div class="screen" id="screen3">
   <h1>Will you be my Valentine? ❤️</h1>
   <button class="yes" onclick="yes()">Yes 💖</button>
-  <button class="no" onmouseover="moveNo(this)">No 🙃</button>
+  <button class="no" onmouseover="moveNo(this)">No keh 🙃</button>
 </div>
 
 <script>
+const herName = "Bunnie"; // Change to her nickname
+const insideJoke = "even when you're a dodo 😌❤️"; // Your joke
+
 function next(screen) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
 function moveNo(btn) {
-  btn.style.position = "absolute";
-  btn.style.left = Math.random() * window.innerWidth + "px";
-  btn.style.top = Math.random() * window.innerHeight + "px";
+  btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
+  btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
 }
 
 function yes() {
   document.body.innerHTML = `
     <div style="margin-top:120px;">
-      <h1>I knew it 😎❤️</h1>
-      <p>I promise to keep choosing you,<br>
-      even on days you steal my food 😌</p>
+      <h1>Yay! I knew it 😎❤️</h1>
+      <p>I promise to keep choosing you,<br>${insideJoke}</p>
       <h2>I love you 💖</h2>
     </div>
   `;
-
+  // Floating hearts
   setInterval(() => {
     const heart = document.createElement("div");
     heart.className = "heart";
@@ -92,9 +147,19 @@ function yes() {
     heart.style.left = Math.random() * window.innerWidth + "px";
     heart.style.animationDuration = (Math.random() * 2 + 3) + "s";
     document.body.appendChild(heart);
-
     setTimeout(() => heart.remove(), 5000);
   }, 300);
+
+  // Confetti
+  setInterval(() => {
+    const confetti = document.createElement("div");
+    confetti.className = "confetti-piece";
+    confetti.style.left = Math.random() * window.innerWidth + "px";
+    confetti.style.top = "-10px";
+    confetti.style.background = `hsl(${Math.random()*360},70%,60%)`;
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 4000);
+  }, 150);
 }
 </script>
 
