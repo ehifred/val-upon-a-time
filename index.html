@@ -78,8 +78,6 @@
 
   .floating-heart {
     position: fixed;
-    width: 30px;
-    height: 30px;
     pointer-events: none;
     opacity: 0.8;
     z-index: 999;
@@ -157,13 +155,14 @@ noBtn.addEventListener("click", () => {
   }
 });
 
-// Floating hearts from start
+// Floating hearts from start using emoji
 setInterval(() => {
-  const heart = document.createElement("img");
-  heart.src = "https://i.imgur.com/5cL9hCn.png";
+  const heart = document.createElement("div");
+  heart.innerText = "❤️";
   heart.className = "floating-heart";
   heart.style.left = Math.random() * window.innerWidth + "px";
-  heart.style.top = "-50px";
+  heart.style.top = "-30px";
+  heart.style.fontSize = "24px";
   heart.style.animationDuration = (3 + Math.random()*2) + "s";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 5000);
@@ -178,15 +177,14 @@ function yes() {
     </div>
   `;
 
-  // Hearts on yes
+  // Hearts on Yes using emoji
   setInterval(() => {
-    const heart = document.createElement("img");
-    heart.src = "https://i.imgur.com/5cL9hCn.png";
+    const heart = document.createElement("div");
+    heart.innerText = "❤️";
     heart.style.position = "fixed";
-    heart.style.width = "30px";
-    heart.style.height = "30px";
+    heart.style.fontSize = "30px";
     heart.style.left = Math.random() * window.innerWidth + "px";
-    heart.style.top = "-50px";
+    heart.style.top = "-30px";
     heart.style.pointerEvents = "none";
     heart.style.opacity = 0.8;
     heart.style.animation = `fall ${3 + Math.random()*2}s linear forwards`;
