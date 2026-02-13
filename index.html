@@ -38,7 +38,7 @@
     50% { border-color: white; }
   }
 
-  .screen { display: none; }
+  .screen { display: none; position: relative; }
   button {
     padding: 12px 25px;
     font-size: 18px;
@@ -46,7 +46,7 @@
     border: none;
     border-radius: 10px;
     cursor: pointer;
-    transition: all 0.3s;
+    transition: all 0.2s;
   }
 
   .yes {
@@ -63,7 +63,7 @@
   .no {
     background: #444;
     color: white;
-    position: relative;
+    position: absolute;
   }
 
   .heart {
@@ -77,7 +77,6 @@
     to { transform: translateY(100vh); opacity: 0; }
   }
 
-  /* Confetti container */
   .confetti-piece {
     position: fixed;
     width: 10px;
@@ -96,7 +95,7 @@
 <!-- Screen 1 -->
 <div class="screen" id="screen1" style="display:block;">
   <div class="typewriter">
-    <h1>Hey <span id="her-name">Bunnie</span> ❤️</h1>
+    <h1>Hey <span id="her-name">Beautiful</span> ❤️</h1>
   </div>
   <p>I made something magical just for you...</p>
   <button onclick="next(2)">Open it</button>
@@ -114,22 +113,43 @@
 <div class="screen" id="screen3">
   <h1>Will you be my Valentine? ❤️</h1>
   <button class="yes" onclick="yes()">Yes 💖</button>
-  <button class="no" onmouseover="moveNo(this)">No keh 🙃</button>
+  <button class="no" id="no-btn">No 🙃</button>
 </div>
 
 <script>
-const herName = "Bunnie"; // Change to her nickname
-const insideJoke = "even when you're a dodo 😌❤️"; // Your joke
+const herName = "Ada"; // Change to her nickname
+const insideJoke = "even when you steal my food 😌❤️"; // Your joke
 
 function next(screen) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
-function moveNo(btn) {
-  btn.style.left = Math.random() * (window.innerWidth - 100) + "px";
-  btn.style.top = Math.random() * (window.innerHeight - 50) + "px";
-}
+// Smarter No button
+const noBtn = document.getElementById("no-btn");
+
+document.getElementById("screen3").addEventListener("mousemove", function(e) {
+  const rect = noBtn.getBoundingClientRect();
+  const btnX = rect.left + rect.width/2;
+  const btnY = rect.top + rect.height/2;
+
+  const distance = Math.hypot(e.clientX - btnX, e.clientY - btnY);
+  
+  // Minimum distance threshold for movement
+  if(distance < 150){
+    const moveX = (Math.random() - 0.5) * (300 / distance); 
+    const moveY = (Math.random() - 0.5) * (300 / distance);
+    
+    // Clamp positions to viewport
+    let newLeft = rect.left + moveX;
+    let newTop = rect.top + moveY;
+    newLeft = Math.max(0, Math.min(window.innerWidth - rect.width, newLeft));
+    newTop = Math.max(0, Math.min(window.innerHeight - rect.height, newTop));
+
+    noBtn.style.left = newLeft + "px";
+    noBtn.style.top = newTop + "px";
+  }
+});
 
 function yes() {
   document.body.innerHTML = `
