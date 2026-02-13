@@ -13,7 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('https://i.imgur.com/7eM8P0n.jpg') no-repeat center center/cover;
+    background: url('https://pixabay.com/get/g3b6e3158a1066f178df47efc851d51ee344e6eae8226d27011bcdfeb247aea804da756ed5f13d703874f0e4e37f05ed1a5dd080f9e240a90a1eb61c8e25e207a_1920.png') no-repeat center center/cover;
     overflow: hidden;
     color: #fff;
     text-align: center;
@@ -156,19 +156,19 @@ noBtn.addEventListener("click", () => {
   }
 });
 
-// Floating hearts from start
+
+// Floating heart images from the start
 setInterval(() => {
   const heart = document.createElement("img");
-  heart.src = "https://i.imgur.com/5cL9hCn.png"; // cute heart image
+  heart.src = "https://i.imgur.com/5cL9hCn.png";
   heart.className = "floating-heart";
   heart.style.left = Math.random() * window.innerWidth + "px";
   heart.style.top = "-50px";
-  heart.style.width = "25px";
-  heart.style.height = "25px";
   heart.style.animationDuration = (3 + Math.random()*2) + "s";
   document.body.appendChild(heart);
   setTimeout(() => heart.remove(), 5000);
-}, 400);
+}, 350);
+
 
 function yes() {
   document.body.innerHTML = `
@@ -178,7 +178,7 @@ function yes() {
       <h2>I love you 💖</h2>
     </div>
   `;
-  // Floating hearts
+  // Hearts on yes
   setInterval(() => {
     const heart = document.createElement("img");
     heart.src = "https://i.imgur.com/5cL9hCn.png";
@@ -194,7 +194,7 @@ function yes() {
     setTimeout(() => heart.remove(), 5000);
   }, 300);
 
-  // Confetti
+  // Confetti on yes
   setInterval(() => {
     const confetti = document.createElement("div");
     confetti.className = "confetti-piece";
