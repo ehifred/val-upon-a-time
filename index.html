@@ -123,45 +123,51 @@
 </div>
 
 <script>
-const herName = "Bunnie"; // updated name
-const insideJoke = "even when you steal my food 😌❤️"; // inside joke
+const herName = "Bunnie";
+const insideJoke = "even when you steal my food 😌❤️";
 
 function next(screen) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
-// Smarter No button: stays on screen, playful messages
+// Track No button position explicitly
 const noBtn = document.getElementById("no-btn");
 const noMsg = document.getElementById("no-msg");
 
+let btnPos = { 
+  left: window.innerWidth / 2, 
+  top: window.innerHeight / 2 
+};
+noBtn.style.left = btnPos.left + "px";
+noBtn.style.top = btnPos.top + "px";
+
 document.getElementById("screen3").addEventListener("mousemove", function(e) {
-  const rect = noBtn.getBoundingClientRect();
-  const btnX = rect.left + rect.width/2;
-  const btnY = rect.top + rect.height/2;
+  const btnX = btnPos.left + noBtn.offsetWidth / 2;
+  const btnY = btnPos.top + noBtn.offsetHeight / 2;
 
   const distance = Math.hypot(e.clientX - btnX, e.clientY - btnY);
 
   if(distance < 150){
-    const moveAmount = Math.min(100, 150 - distance); // max move 100px
+    const moveAmount = Math.min(100, 150 - distance);
     const moveX = (Math.random() - 0.5) * moveAmount * 2;
     const moveY = (Math.random() - 0.5) * moveAmount * 2;
 
-    let newLeft = rect.left + moveX;
-    let newTop = rect.top + moveY;
+    btnPos.left += moveX;
+    btnPos.top += moveY;
 
     // Clamp to viewport
-    newLeft = Math.max(0, Math.min(window.innerWidth - rect.width, newLeft));
-    newTop = Math.max(0, Math.min(window.innerHeight - rect.height, newTop));
+    btnPos.left = Math.max(0, Math.min(window.innerWidth - noBtn.offsetWidth, btnPos.left));
+    btnPos.top = Math.max(0, Math.min(window.innerHeight - noBtn.offsetHeight, btnPos.top));
 
-    noBtn.style.left = newLeft + "px";
-    noBtn.style.top = newTop + "px";
+    noBtn.style.left = btnPos.left + "px";
+    noBtn.style.top = btnPos.top + "px";
 
     // Playful messages
     const messages = ["Nice try 😏","Try again! 😜","Haha nope! 😂","Not yet 😎"];
     noMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
-    noMsg.style.left = (newLeft + rect.width/2 - 30) + "px";
-    noMsg.style.top = (newTop - 30) + "px";
+    noMsg.style.left = (btnPos.left + noBtn.offsetWidth / 2 - 30) + "px";
+    noMsg.style.top = (btnPos.top - 30) + "px";
   }
 });
 
