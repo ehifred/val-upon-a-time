@@ -13,10 +13,21 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: url('https://pixabay.com/get/g3b6e3158a1066f178df47efc851d51ee344e6eae8226d27011bcdfeb247aea804da756ed5f13d703874f0e4e37f05ed1a5dd080f9e240a90a1eb61c8e25e207a_1920.png') no-repeat center center/cover;
     overflow: hidden;
     color: #fff;
     text-align: center;
+    position: relative;
+  }
+
+  /* Background image with blur overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: url('https://pixabay.com/get/g3b6e3158a1066f178df47efc851d51ee344e6eae8226d27011bcdfeb247aea804da756ed5f13d703874f0e4e37f05ed1a5dd080f9e240a90a1eb61c8e25e207a_1920.png') no-repeat center center/cover;
+    filter: blur(8px) brightness(0.6);
+    z-index: -1;
   }
 
   .typewriter h1 {
@@ -77,16 +88,6 @@
 
   @keyframes fall {
     to { transform: translateY(100vh); opacity: 0; }
-  }
-
-  .confetti-piece {
-    position: fixed;
-    width: 10px;
-    height: 10px;
-    z-index: 9999;
-    pointer-events: none;
-    opacity: 0.8;
-    transform: rotate(45deg);
   }
 
   #no-msg {
@@ -156,8 +157,7 @@ noBtn.addEventListener("click", () => {
   }
 });
 
-
-// Floating heart images from the start
+// Floating hearts from start
 setInterval(() => {
   const heart = document.createElement("img");
   heart.src = "https://i.imgur.com/5cL9hCn.png";
@@ -169,7 +169,6 @@ setInterval(() => {
   setTimeout(() => heart.remove(), 5000);
 }, 350);
 
-
 function yes() {
   document.body.innerHTML = `
     <div style="margin-top:120px;">
@@ -178,6 +177,7 @@ function yes() {
       <h2>I love you 💖</h2>
     </div>
   `;
+
   // Hearts on yes
   setInterval(() => {
     const heart = document.createElement("img");
@@ -193,17 +193,6 @@ function yes() {
     document.body.appendChild(heart);
     setTimeout(() => heart.remove(), 5000);
   }, 300);
-
-  // Confetti on yes
-  setInterval(() => {
-    const confetti = document.createElement("div");
-    confetti.className = "confetti-piece";
-    confetti.style.left = Math.random() * window.innerWidth + "px";
-    confetti.style.top = "-10px";
-    confetti.style.background = `hsl(${Math.random()*360},70%,60%)`;
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 4000);
-  }, 150);
 }
 </script>
 
