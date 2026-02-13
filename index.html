@@ -62,7 +62,7 @@
   .no {
     background: #444;
     color: white;
-    position: absolute;
+    position: relative;
   }
 
   .heart {
@@ -88,12 +88,11 @@
   }
 
   #no-msg {
-    position: absolute;
-    top: -30px;
     font-size: 16px;
     color: yellow;
     font-weight: bold;
-    pointer-events: none;
+    margin-top: 10px;
+    min-height: 20px;
   }
 </style>
 </head>
@@ -131,43 +130,29 @@ function next(screen) {
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
-// Track No button position explicitly
+// NO button click messages
 const noBtn = document.getElementById("no-btn");
 const noMsg = document.getElementById("no-msg");
 
-let btnPos = { 
-  left: window.innerWidth / 2, 
-  top: window.innerHeight / 2 
-};
-noBtn.style.left = btnPos.left + "px";
-noBtn.style.top = btnPos.top + "px";
+let noClickCount = 0;
+const messages = [
+  "Pretty please? 😇",
+  "Are you sure? 😜",
+  "Really really sure? 😏",
+  "Sorry, no more options… say Yes or else 😎"
+];
 
-document.getElementById("screen3").addEventListener("mousemove", function(e) {
-  const btnX = btnPos.left + noBtn.offsetWidth / 2;
-  const btnY = btnPos.top + noBtn.offsetHeight / 2;
-
-  const distance = Math.hypot(e.clientX - btnX, e.clientY - btnY);
-
-  if(distance < 150){
-    const moveAmount = Math.min(100, 150 - distance);
-    const moveX = (Math.random() - 0.5) * moveAmount * 2;
-    const moveY = (Math.random() - 0.5) * moveAmount * 2;
-
-    btnPos.left += moveX;
-    btnPos.top += moveY;
-
-    // Clamp to viewport
-    btnPos.left = Math.max(0, Math.min(window.innerWidth - noBtn.offsetWidth, btnPos.left));
-    btnPos.top = Math.max(0, Math.min(window.innerHeight - noBtn.offsetHeight, btnPos.top));
-
-    noBtn.style.left = btnPos.left + "px";
-    noBtn.style.top = btnPos.top + "px";
-
-    // Playful messages
-    const messages = ["Nice try 😏","Try again! 😜","Haha nope! 😂","Not yet 😎"];
-    noMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
-    noMsg.style.left = (btnPos.left + noBtn.offsetWidth / 2 - 30) + "px";
-    noMsg.style.top = (btnPos.top - 30) + "px";
+noBtn.addEventListener("click", () => {
+  if(noClickCount < messages.length - 1){
+    noMsg.innerText = messages[noClickCount];
+    noClickCount++;
+  } else {
+    // Turn No into Yes button
+    noBtn.innerText = "Yes 💖";
+    noBtn.classList.remove("no");
+    noBtn.classList.add("yes");
+    noBtn.onclick = yes;
+    noMsg.innerText = messages[noClickCount]; // final message
   }
 });
 
