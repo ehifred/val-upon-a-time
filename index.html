@@ -27,6 +27,7 @@
     letter-spacing: .1em;
     animation: typing 3s steps(40, end), blink-caret .75s step-end infinite;
   }
+
   @keyframes typing {
     from { width: 0 }
     to { width: 100% }
@@ -86,7 +87,6 @@
     transform: rotate(45deg);
   }
 
-  /* playful message above the No button */
   #no-msg {
     position: absolute;
     top: -30px;
@@ -102,7 +102,7 @@
 
 <div class="screen" id="screen1" style="display:block;">
   <div class="typewriter">
-    <h1>Hey <span id="her-name">Beautiful</span> ❤️</h1>
+    <h1>Hey <span id="her-name">Bunnie</span> ❤️</h1>
   </div>
   <p>I made something magical just for you...</p>
   <button onclick="next(2)">Open it</button>
@@ -123,7 +123,7 @@
 </div>
 
 <script>
-const herName = "Ada"; // her nickname
+const herName = "Bunnie"; // updated name
 const insideJoke = "even when you steal my food 😌❤️"; // inside joke
 
 function next(screen) {
@@ -131,7 +131,7 @@ function next(screen) {
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
-// No button smarter + playful messages
+// Smarter No button: stays on screen, playful messages
 const noBtn = document.getElementById("no-btn");
 const noMsg = document.getElementById("no-msg");
 
@@ -141,20 +141,23 @@ document.getElementById("screen3").addEventListener("mousemove", function(e) {
   const btnY = rect.top + rect.height/2;
 
   const distance = Math.hypot(e.clientX - btnX, e.clientY - btnY);
-  
+
   if(distance < 150){
-    const moveX = (Math.random() - 0.5) * (300 / distance); 
-    const moveY = (Math.random() - 0.5) * (300 / distance);
-    
+    const moveAmount = Math.min(100, 150 - distance); // max move 100px
+    const moveX = (Math.random() - 0.5) * moveAmount * 2;
+    const moveY = (Math.random() - 0.5) * moveAmount * 2;
+
     let newLeft = rect.left + moveX;
     let newTop = rect.top + moveY;
+
+    // Clamp to viewport
     newLeft = Math.max(0, Math.min(window.innerWidth - rect.width, newLeft));
     newTop = Math.max(0, Math.min(window.innerHeight - rect.height, newTop));
 
     noBtn.style.left = newLeft + "px";
     noBtn.style.top = newTop + "px";
 
-    // Playful message
+    // Playful messages
     const messages = ["Nice try 😏","Try again! 😜","Haha nope! 😂","Not yet 😎"];
     noMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
     noMsg.style.left = (newLeft + rect.width/2 - 30) + "px";
