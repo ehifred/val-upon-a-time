@@ -6,7 +6,6 @@
 <title>Valentine Surprise 💖</title>
 
 <style>
-  /* Background */
   body {
     margin: 0;
     font-family: 'Segoe UI', Arial, sans-serif;
@@ -20,7 +19,6 @@
     text-align: center;
   }
 
-  /* Typewriter effect */
   .typewriter h1 {
     overflow: hidden;
     border-right: .15em solid #fff;
@@ -87,12 +85,21 @@
     opacity: 0.8;
     transform: rotate(45deg);
   }
+
+  /* playful message above the No button */
+  #no-msg {
+    position: absolute;
+    top: -30px;
+    font-size: 16px;
+    color: yellow;
+    font-weight: bold;
+    pointer-events: none;
+  }
 </style>
 </head>
 
 <body>
 
-<!-- Screen 1 -->
 <div class="screen" id="screen1" style="display:block;">
   <div class="typewriter">
     <h1>Hey <span id="her-name">Beautiful</span> ❤️</h1>
@@ -101,7 +108,6 @@
   <button onclick="next(2)">Open it</button>
 </div>
 
-<!-- Screen 2 -->
 <div class="screen" id="screen2">
   <div class="typewriter">
     <h1>I've got an important question 🥺</h1>
@@ -109,24 +115,25 @@
   <button onclick="next(3)">Okay... ask</button>
 </div>
 
-<!-- Screen 3 -->
 <div class="screen" id="screen3">
   <h1>Will you be my Valentine? ❤️</h1>
   <button class="yes" onclick="yes()">Yes 💖</button>
   <button class="no" id="no-btn">No 🙃</button>
+  <div id="no-msg"></div>
 </div>
 
 <script>
-const herName = "Ada"; // Change to her nickname
-const insideJoke = "even when you steal my food 😌❤️"; // Your joke
+const herName = "Ada"; // her nickname
+const insideJoke = "even when you steal my food 😌❤️"; // inside joke
 
 function next(screen) {
   document.querySelectorAll('.screen').forEach(s => s.style.display = 'none');
   document.getElementById('screen' + screen).style.display = 'block';
 }
 
-// Smarter No button
+// No button smarter + playful messages
 const noBtn = document.getElementById("no-btn");
+const noMsg = document.getElementById("no-msg");
 
 document.getElementById("screen3").addEventListener("mousemove", function(e) {
   const rect = noBtn.getBoundingClientRect();
@@ -135,12 +142,10 @@ document.getElementById("screen3").addEventListener("mousemove", function(e) {
 
   const distance = Math.hypot(e.clientX - btnX, e.clientY - btnY);
   
-  // Minimum distance threshold for movement
   if(distance < 150){
     const moveX = (Math.random() - 0.5) * (300 / distance); 
     const moveY = (Math.random() - 0.5) * (300 / distance);
     
-    // Clamp positions to viewport
     let newLeft = rect.left + moveX;
     let newTop = rect.top + moveY;
     newLeft = Math.max(0, Math.min(window.innerWidth - rect.width, newLeft));
@@ -148,6 +153,12 @@ document.getElementById("screen3").addEventListener("mousemove", function(e) {
 
     noBtn.style.left = newLeft + "px";
     noBtn.style.top = newTop + "px";
+
+    // Playful message
+    const messages = ["Nice try 😏","Try again! 😜","Haha nope! 😂","Not yet 😎"];
+    noMsg.innerText = messages[Math.floor(Math.random() * messages.length)];
+    noMsg.style.left = (newLeft + rect.width/2 - 30) + "px";
+    noMsg.style.top = (newTop - 30) + "px";
   }
 });
 
